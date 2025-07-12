@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Karbon Ayak İzi Sonucu</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🌍 Karbon Ayak İzi Sonuçları</h1>
+      <p class="subtitle">Aşağıda tüketiminize göre CO₂ salınımınız listelenmiştir</p>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-card electricity">
+        <h3>🔌 Elektrik</h3>
+        <div class="value">{{ elektrik_karbon }}</div>
+        <div class="unit">kg CO₂</div>
+      </div>
+
+      <div class="result-card gas">
+        <h3>🔥 Doğalgaz</h3>
+        <div class="value">{{ gaz_karbon }}</div>
+        <div class="unit">kg CO₂</div>
+      </div>
+
+      <div class="result-card water">
+        <h3>🚿 Su</h3>
+        <div class="value">{{ su_karbon }}</div>
+        <div class="unit">kg CO₂</div>
+      </div>
+
+      <div class="result-card meat">
+        <h3>🥩 Kırmızı Et</h3>
+        <div class="value">{{ kirmiziet_karbon }}</div>
+        <div class="unit">kg CO₂</div>
+      </div>
+
+      <div class="result-card meat">
+        <h3>🍗 Beyaz Et</h3>
+        <div class="value">{{ beyazet_karbon }}</div>
+        <div class="unit">kg CO₂</div>
+      </div>
+
+      <div class="result-card clothing">
+        <h3>👕 Kıyafet</h3>
+        <div class="value">{{ kiyafet_karbon }}</div>
+        <div class="unit">kg CO₂</div>
+      </div>
+
+      <div class="result-card car">
+        <h3>🚗 Araba</h3>
+        <div class="value">{{ araba_karbon }}</div>
+        <div class="unit">kg CO₂</div>
+      </div>
+    </div>
+
+    <div class="total-result">
+      <h2>Toplam Karbon Ayak İzi</h2>
+      <div class="total-value">{{ Toplam_karbon }}</div>
+      <div class="unit">Ton CO₂</div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="/" class="back-btn">⬅️ Geri Dön</a>
+    </div>
+  </div>
+</body>
+</html>

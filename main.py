@@ -21,6 +21,8 @@ def arabaCo2(arabakm,araba_cesit):
         araba_karbon = arabakm*0.270
     elif araba_cesit == "LPG":
         araba_karbon = arabakm*0.220
+    else:
+        araba_karbon = 0
     return araba_karbon
 def kirmiziEtCo2(kirmizi_et):
     kirmizi_et_karbon = kirmizi_et * 27
@@ -31,7 +33,6 @@ def beyazEtCo2(beyaz_et):
 def kiyafetCo2(kiyafet):
     kiyafet_karbon = kiyafet*25
     return kiyafet_karbon
-
 
 
 def ToplamCo2(elektrik,gaz,su,araba,kirmizi_et,beyaz_et,kiyafet):
