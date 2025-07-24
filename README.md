@@ -37,8 +37,6 @@ Projenin temel amacı; kullanıcıların çevresel etkilerini daha iyi anlamalar
 Aşağıda projeye ait bir örnek ekran görüntüsü yer almakta:  
 ![Karbon Ayak İzi Uygulama Ekranı](./assets/ekran-goruntusu.png)
 
-> Not: Uygulamanın çalışan demosunu görmek için şu bağlantıya tıklayabilirsiniz: [Demo Linki](https://ornek-site.com)  
-(Veya YouTube videosu buraya eklenebilir.)
 
 ---
 
