@@ -7,8 +7,17 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/game')
+def game():
+    return render_template('game.html')  
+
+
+
+
+
 @app.route('/hesapla', methods=['POST'])
 def hesapla():
+    
     elektrik = float(request.form['electricity'])
     gaz = float(request.form['gas'])
     su = float(request.form['water'])
@@ -26,6 +35,41 @@ def hesapla():
     kiyafet_karbon = kiyafetCo2(kiyafet=kiyafet)
     araba_karbon = arabaCo2(araba_cesit=araba,arabakm=arabakm)
 
+    tr_ort = {
+    "Elektrik": 58,
+    "Doğal Gaz": 50,
+    "Su": 10,
+    "Ulaşım": 112,
+    "Kırmızı Et": 29,
+    "Beyaz Et": 10,
+    "Kıyafet": 15
+    }
+
+    emisyonlar = {
+    "Elektrik": elektrik_karbon,
+    "Doğal Gaz": gaz_karbon,
+    "Su": su_karbon,
+    "Ulaşım": araba_karbon,
+    "Kırmızı Et": kirmiziet_karbon,
+    "Beyaz Et": beyazet_karbon,
+    "Kıyafet": kiyafet_karbon
+    }
+
+    oneriler = {
+    "Elektrik": "Elektrik tüketimini azaltmak için tasarruflu cihazlar kullanabilirsin.",
+    "Doğal Gaz": "Isı yalıtımı yaparak doğal gaz tüketimini azaltabilirsin.",
+    "Su": "Daha az su harcamak için kısa duşlar alabilirsin.",
+    "Ulaşım": "Araba yerine toplu taşıma veya bisiklet tercih edebilirsin.",
+    "Kırmızı Et": "Kırmızı et yerine sebze ve baklagiller tüketebilirsin.",
+    "Beyaz Et": "Haftalık et tüketimini biraz azaltmak faydalı olur.",
+    "Kıyafet": "İkinci el alışverişi değerlendirebilirsin."
+    }
+
+    fark_atanlar = []
+    for i in emisyonlar:
+        if emisyonlar[i] > tr_ort[i]:
+            fark_atanlar.append(oneriler[i])
+
     Toplam_karbon = ToplamCo2(elektrik=elektrik_karbon
                               ,gaz=gaz_karbon
                               ,su=su_karbon
@@ -41,7 +85,8 @@ def hesapla():
                                         kirmiziet_karbon=kirmiziet_karbon,
                                         beyazet_karbon=beyazet_karbon,
                                         kiyafet_karbon=kiyafet_karbon,
-                                        araba_karbon=araba_karbon)
+                                        araba_karbon=araba_karbon,
+                                        oneriler=fark_atanlar)
 
 if __name__ == '__main__':
     app.run(debug=True)

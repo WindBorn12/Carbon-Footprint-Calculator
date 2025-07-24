@@ -61,10 +61,69 @@
       <div class="total-value">{{ Toplam_karbon }}</div>
       <div class="unit">Ton CO₂</div>
     </div>
+    
+   {% if oneriler %}
+  <div class="oneriler-kutusu">
+    <h3>💡 Öneriler:</h3>
+    <ul>
+      {% for oneri in oneriler %}
+        <li>{{ oneri }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% else %}
+  <div class="oneriler-kutusu basarili">
+    <h3>🌿 Harika gidiyorsun!</h3>
+    <p>Karbon ayak izin Türkiye ortalamasının altında.</p>
+  </div>
+{% endif %}
+    
+    <p>Türkiye ortalaması: 5.14 ton CO₂/yıl</p>
+    <p>Dünya ortalaması: 4.7 ton CO₂/yıl</p>
 
-    <div style="text-align:center;">
+
+    <canvas id="emisyonGrafik" width="300" height="300"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('emisyonGrafik').getContext('2d');
+
+  const data = {
+    labels: ['Elektrik', 'Doğal Gaz', 'Su', 'Ulaşım', 'Kırmızı Et', 'Beyaz Et', 'Kıyafet'],
+    datasets: [{
+      label: 'CO₂ Dağılımı (kg)',
+      data: [
+        {{ elektrik_karbon }},
+        {{ co2_gaz }},
+        {{ su_karbon }},
+        {{ araba_karbon }},
+        {{ kirmiziet_karbon }},
+        {{ beyazet_karbon }},
+        {{ kiyafet_karbon }}
+      ],
+      backgroundColor: [
+        '#f94144', '#f3722c', '#f9c74f', '#90be6d',
+        '#43aa8b', '#577590', '#277da1'
+      ]
+    }]
+  };
+
+  new Chart(ctx, {
+    type: 'pie',
+    data: data,
+  });
+</script>
+
+
+       <div style="text-align:center; margin-top: 40px;">
       <a href="/" class="back-btn">⬅️ Geri Dön</a>
     </div>
-  </div>
+
+    <div style="text-align:center; margin-top: 20px;">
+      <a href="/game" class="back-btn">🎮 Mini Oyun</a>
+    </div>
+  </div> <!-- container -->
+
+
 </body>
 </html>

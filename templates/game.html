@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini Oyun</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      padding-top: 40px;
+    }
+
+    canvas {
+      border-radius: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .game-wrapper {
+      text-align: center;
+    }
+
+    button {
+      margin-top: 20px;
+      font-size: 18px;
+      padding: 12px 32px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    p {
+      color: #333;
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    #score-text {
+      margin-top: 10px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #444;
+    }
+  </style>
+</head>
+<body onload="startGame()">
+
+  <div class="game-wrapper">
+    <div id="score-text">SCORE: 0</div>
+  </div>
+
+  <script>
+    var myGamePiece;
+    var myObstacles = [];
+    var myScore;
+
+    function startGame() {
+      myGamePiece = new component(30, 30, "../static/img/image3.png", 10, 120, "image");
+      myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+      myGameArea.start();
+    }
+
+    var myGameArea = {
+      canvas: document.createElement("canvas"),
+      start: function () {
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+        this.context = this.canvas.getContext("2d");
+        document.querySelector(".game-wrapper").appendChild(this.canvas);
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea, 20);
+      },
+      clear: function () {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      }
+    }
+
+    function component(width, height, srcOrColor, x, y, type) {
+      this.type = type;
+      this.width = width;
+      this.height = height;
+      this.speedX = 0;
+      this.speedY = 0;
+      this.x = x;
+      this.y = y;
+      this.gravity = 0;
+      this.gravitySpeed = 0;
+
+      if (this.type === "image") {
+        this.image = new Image();
+        this.image.src = srcOrColor;
+      }
+      this.text = "";
+
+      this.update = function () {
+        var ctx = myGameArea.context;
+        if (this.type === "text") {
+          ctx.font = this.width + " " + this.height;
+          ctx.fillStyle = srcOrColor;
+          ctx.fillText(this.text, this.x, this.y);
+        }
+        else if (this.type === "image") {
+          ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        }
+        else {
+          ctx.fillStyle = srcOrColor;
+          ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+      }
+
+      this.newPos = function () {
+        this.gravitySpeed += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravitySpeed;
+        this.hitBottom();
+      }
+
+      this.hitBottom = function () {
+        var rockbottom = myGameArea.canvas.height - this.height;
+        if (this.y > rockbottom) {
+          this.y = rockbottom;
+          this.gravitySpeed = 0;
+        }
+      }
+
+      this.crashWith = function (otherobj) {
+        var myleft = this.x;
+        var myright = this.x + this.width;
+        var mytop = this.y;
+        var mybottom = this.y + this.height;
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + otherobj.width;
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + otherobj.height;
+
+        return !(mybottom < othertop ||
+          mytop > otherbottom ||
+          myright < otherleft ||
+          myleft > otherright);
+      }
+    }
+
+    function updateGameArea() {
+      for (var i = 0; i < myObstacles.length; i++) {
+        if (myGamePiece.crashWith(myObstacles[i])) {
+          alert("Oyun bitti! Skorunuz: " + myGameArea.frameNo);
+          clearInterval(myGameArea.interval);
+          return;
+        }
+      }
+
+      myGameArea.clear();
+      myGameArea.frameNo++;
+
+      if (myGameArea.frameNo == 1 || everyinterval(150)) {
+        var x = myGameArea.canvas.width;
+        var minHeight = 20;
+        var maxHeight = 150;
+        var height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
+        var minGap = 50;
+        var maxGap = 120;
+        var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
+
+        myObstacles.push(new component(20, height, "../static/img/image.png", x, 0, "image"));
+
+        var bottomY = height + gap;
+        var bottomHeight = myGameArea.canvas.height - bottomY;
+        myObstacles.push(new component(20, bottomHeight, "../static/img/image.png", x, bottomY, "image"));
+      }
+
+      for (var i = 0; i < myObstacles.length; i++) {
+        myObstacles[i].x -= 2;
+        myObstacles[i].update();
+      }
+
+      document.getElementById("score-text").innerText = "SCORE: " + myGameArea.frameNo;
+
+      myGamePiece.newPos();
+      myGamePiece.update();
+    }
+
+    function everyinterval(n) {
+      return (myGameArea.frameNo / n) % 1 === 0;
+    }
+
+    function accelerate(n) {
+      myGamePiece.gravity = n;
+    }
+  </script>
+
+  <button onmousedown="accelerate(-0.3)" onmouseup="accelerate(0.05)">HIZLAN</button>
+  <p>Havada kalmak için butona basılı tut</p>
+  <p>Ne kadar uzun süre hayatta kalabilirsin?</p>
+
+</body>
+</html>

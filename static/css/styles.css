@@ -1,4 +1,8 @@
 /* Genel Ayarlar */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+
+
 * {
   margin: 0;
   padding: 0;
@@ -8,7 +12,7 @@
 body {
   font-family: 'Arial', sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
+  min-height: 22200vh;
   padding: 30px;
   color: #333;
 }
@@ -198,3 +202,46 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.oneriler-kutusu {
+  background-color: #f0f8ff;
+  border-left: 6px solid #007bff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  margin-top: 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 100%;
+}
+
+.oneriler-kutusu h3 {
+  color: #2c3e50;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.oneriler-kutusu ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.oneriler-kutusu li {
+  font-size: 16px;
+  color: #34495e;
+  margin-bottom: 10px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.oneriler-kutusu.basarili {
+  background-color: #e8f5e9;
+  border-left-color: #27ae60;
+}
+
+.oneriler-kutusu.basarili h3 {
+  color: #27ae60;
+}
+
+.oneriler-kutusu.basarili p {
+  font-size: 16px;
+  color: #2e7d32;
+}
+
