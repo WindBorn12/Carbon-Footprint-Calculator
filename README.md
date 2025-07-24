@@ -50,6 +50,8 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
    ```bash
    git clone https://github.com/kullaniciadi/karbon-ayak-izi.git
 
+---
+
 💬 Geri Bildirim ve Katkı
 Geliştirme süreci tamamen açık kaynak felsefesiyle yürütülmektedir.
 Her türlü geri bildirimi, hata raporlarını veya geliştirme fikirlerini şu yollarla paylaşabilirsiniz:
@@ -58,6 +60,7 @@ GitHub Issues sekmesinden sorun bildirin
 
 Pull request gönderin
 
+---
 
 🏁 Sonuç
 Bu proje, çevre dostu yaşam için farkındalık yaratmayı ve bireylerin kendi karbon ayak izlerini analiz edebilmesini hedefler. Eğitim amaçlı kullanılabileceği gibi çevre bilimleri derslerinde, sivil toplum kuruluşlarının kampanyalarında veya kişisel farkındalık aracı olarak da değerlendirilebilir.
